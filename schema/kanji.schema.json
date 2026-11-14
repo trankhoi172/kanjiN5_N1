@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/trankhoi172/kanjiN5_N1/main/schema/kanji.schema.json",
+  "title": "JLPT Kanji Schema",
+  "description": "JSON Schema for Japanese JLPT N5–N1 Kanji entries and datasets.",
+  "oneOf": [
+    {
+      "type": "array",
+      "description": "A list of Kanji entries",
+      "items": {
+        "$ref": "#/$defs/kanjiEntry"
+      }
+    },
+    {
+      "$ref": "#/$defs/kanjiEntry"
+    }
+  ],
+  "$defs": {
+    "kanjiEntry": {
+      "type": "object",
+      "title": "KanjiEntry",
+      "description": "Schema for a single Kanji character entry",
+      "required": [
+        "kanji",
+        "level"
+      ],
+      "properties": {
+        "kanji": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2,
+          "description": "The Kanji character (single glyph or surrogate pair)."
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "N5",
+            "N4",
+            "N3",
+            "N2",
+            "N1"
+          ],
+          "description": "The JLPT level of the Kanji character."
+        },
+        "meanings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Meanings in various languages (e.g. Vietnamese, English).",
+          "properties": {
+            "vi": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of Vietnamese meanings."
+            },
+            "en": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of English meanings."
+            }
+          },
+          "additionalProperties": false
+        },
+        "onyomi": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of On readings (usually written in Katakana)."
+        },
+        "kunyomi": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of Kun readings (usually written in Hiragana)."
+        },
+        "radical": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The radical (Bộ thủ) of the Kanji."
+        },
+        "strokes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "Total stroke count (Số nét vẽ)."
+        },
+        "examples": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/exampleEntry"
+          },
+          "description": "List of vocabulary words and examples containing this Kanji."
+        }
+      },
+      "additionalProperties": false
+    },
+    "exampleEntry": {
+      "type": "object",
+      "title": "ExampleEntry",
+      "description": "A vocabulary example containing the Kanji character.",
+      "required": [
+        "word",
+        "reading"
+      ],
+      "properties": {
+        "word": {
+          "type": "string",
+          "description": "The compound word or vocabulary term in Japanese."
+        },
+        "reading": {
+          "type": "string",
+          "description": "The reading of the word in Kana (Hiragana/Katakana)."
+        },
+        "meaning_vi": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Meaning of the word in Vietnamese."
+        },
+        "meaning_en": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Meaning of the word in English."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
